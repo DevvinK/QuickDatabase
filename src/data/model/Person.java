@@ -1,4 +1,4 @@
-package dirty.model;
+package data.model;
 
 public class Person
 {

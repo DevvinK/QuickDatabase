@@ -1,4 +1,4 @@
-package dirty.model;
+package data.model;
 
 import java.util.ArrayList;
 
