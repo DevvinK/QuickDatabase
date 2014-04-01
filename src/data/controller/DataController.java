@@ -353,12 +353,16 @@ public class DataController
 	 */
 	public void connectToExternalServer()
 	{
-		buildConnectionString("10.228.6.204", "","ctec", "student");
+		buildConnectionString("10.228.6.204", "graveyard", "ctec", "student");
 		setupConnection();
 		createDatabase();
 	}
 
-	
+	/**
+	 * 
+	 * @param tableName
+	 * @return
+	 */
 	public Vector<Person> selectDataFromTable(String tableName)
 	{
 		Vector<Person> personVector = new Vector<Person>();

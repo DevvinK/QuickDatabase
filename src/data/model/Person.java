@@ -2,11 +2,29 @@ package data.model;
 
 public class Person
 {
+	/**
+	 * 
+	 */
 	private String name;
+	/**
+	 * 
+	 */
 	private String birthDate;
+	/**
+	 * 
+	 */
 	private String deathDate;
+	/**
+	 * 
+	 */
 	private boolean isMarried;
+	/**
+	 * 
+	 */
 	private boolean hasChildren;
+	/**
+	 * 
+	 */
 	private int age;
 
 
@@ -59,7 +77,9 @@ public class Person
 		this.age = age;
 	}
 	
-	
+	/**
+	 * 
+	 */
 	public Person()
 	{
 		name = "";
@@ -70,6 +90,11 @@ public class Person
 		age = -500;
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @param deathDate
+	 */
 	public Person(String name, String deathDate)
 	{
 		this.name = name;
@@ -77,6 +102,9 @@ public class Person
 		
 	}
 
+	/**
+	 * 
+	 */
 	public String toString()
 	{
 		String personInfo = "";

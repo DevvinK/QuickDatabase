@@ -4,10 +4,18 @@ import java.util.ArrayList;
 
 public class Gravemarker
 {
+	/**
+	 * 
+	 */
 	private ArrayList<Person> gravePersonList;
+	/**
+	 * 
+	 */
 	private boolean isReadable;
 	
-	
+	/**
+	 * 
+	 */
 	public String toString()
 	{
 		String graveInfo = "";
