@@ -9,19 +9,19 @@ import data.view.DataFrame;
 public class AppController
 {
 	/**
-	 * 
+	 * Creates an object for the DataController.
 	 */
 	private DataController myDataController;
 	/**
-	 * 
+	 * Creates an object for the DataFrame.
 	 */
 	private DataFrame myAppFrame;
 	/**
-	 * 
+	 * Creates an ArrayList for Gravemarkers.
 	 */
 	private ArrayList<Gravemarker> graveyardMarkerList;
 	/**
-	 * 
+	 * Creates an ArrayList for Persons.
 	 */
 	private ArrayList<Person> graveyardPersons;
 	

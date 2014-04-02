@@ -9,11 +9,11 @@ import data.controller.AppController;
 public class DataFrame extends JFrame
 {
 	/**
-	 * 
+	 * Creates an object of the AppController.
 	 */
 	private AppController baseController;
 	/**
-	 * 
+	 * Creates an object of the DataPanel.
 	 */
 	private DataPanel myDatabasePanel;
 	
