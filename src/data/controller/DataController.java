@@ -14,7 +14,7 @@ public class DataController
 	 */
 	private String connectionString;
 	/**
-	 * The current 
+	 * The current
 	 */
 	private Connection dataConnection;
 	/**
@@ -22,9 +22,10 @@ public class DataController
 	 */
 	private AppController baseController;
 
-	
 	/**
-	 * Creates a DatabaseController with a reference to he AppController for message passing.
+	 * Creates a DatabaseController with a reference to he AppController for
+	 * message passing.
+	 * 
 	 * @param baseController
 	 */
 	public DataController(AppController baseController)
@@ -38,7 +39,7 @@ public class DataController
 	}
 
 	/**
-	 * Checks that the driver 
+	 * Checks that the driver
 	 */
 	public void checkDriver()
 	{
@@ -79,14 +80,27 @@ public class DataController
 			displaySQLErrors(currentSQLError);
 		}
 	}
-	
-/**
- 	* Builds a Java connectionString for a MySQL database with the supplied fields for server path, database, username, and password to access the database.
- * @param serverPath The path to the server. This can be an IP address or a URL string.
- * @param database The name of the database you are connecting to. If left blamk, the connectionString is for the server itself. Remember that it is case sensitive.
- * @param userName The username for the database access. If that user does not have permission the connection will fail.
- * @param password The password in cleartext for the connection. If it does not hash to match the password for the user, the connection will fail.
- */
+
+	/**
+	 * Builds a Java connectionString for a MySQL database with the supplied
+	 * fields for server path, database, username, and password to access the
+	 * database.
+	 * 
+	 * @param serverPath
+	 *            The path to the server. This can be an IP address or a URL
+	 *            string.
+	 * @param database
+	 *            The name of the database you are connecting to. If left blamk,
+	 *            the connectionString is for the server itself. Remember that
+	 *            it is case sensitive.
+	 * @param userName
+	 *            The username for the database access. If that user does not
+	 *            have permission the connection will fail.
+	 * @param password
+	 *            The password in cleartext for the connection. If it does not
+	 *            hash to match the password for the user, the connection will
+	 *            fail.
+	 */
 	public void buildConnectionString(String serverPath, String database, String userName, String password)
 	{
 		connectionString = "jdbc:mysql://" + serverPath + "/" + database + "?user=" + userName + "&password=" + password;
@@ -109,8 +123,8 @@ public class DataController
 	}
 
 	/**
-	 * Creates a database on the existing SQL server connection.
-	 * Can use stuff in "" instead of creating a seprate line.
+	 * Creates a database on the existing SQL server connection. Can use stuff
+	 * in "" instead of creating a seprate line.
 	 */
 	public void createDatabase()
 	{
@@ -131,16 +145,17 @@ public class DataController
 	}
 
 	/*
-	 * Creates a database on the connected server with the specified databaseName.
-	 * Can use the String createSQL and put it into the .exicuteUpdate or put the stuff in "" instead.
+	 * Creates a database on the connected server with the specified
+	 * databaseName. Can use the String createSQL and put it into the
+	 * .exicuteUpdate or put the stuff in "" instead.
 	 */
 	public void createDatabase(String databaseName)
 	{
 		try
 		{
 			Statement createDatabaseStatement = dataConnection.createStatement();
-			
-			String createSQL = "CREATE DATABASE IF NOT EXISTS `" +databaseName + "`;`";
+
+			String createSQL = "CREATE DATABASE IF NOT EXISTS `" + databaseName + "`;`";
 
 			int result = createDatabaseStatement.executeUpdate(createSQL);
 
@@ -151,7 +166,7 @@ public class DataController
 			displaySQLErrors(currentSQLError);
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -195,9 +210,9 @@ public class DataController
 	}
 
 	/**
-	 * Creates a people table on the supplied database using Person data members.
-	 * Will not override an existing table. Calls the displaySQLErrors method if
-	 * there are SQL problems.
+	 * Creates a people table on the supplied database using Person data
+	 * members. Will not override an existing table. Calls the displaySQLErrors
+	 * method if there are SQL problems.
 	 * 
 	 * @param database
 	 *            The suplied database.
@@ -207,17 +222,8 @@ public class DataController
 		try
 		{
 			Statement createPersonTableStatement = dataConnection.createStatement();
-			String createPersonTable = "CREATE TABLE IF NOT EXISTS `" + database + "` . `people`" + 
-			"(" + 
-					"`person_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ," + 
-					"`person_name` VARCHAR (50)," +
-					"`death_date` VARCHAR (30)," + 
-					"`birth_date` VARCHAR (30),"+ 
-					"`is_married` TINYINT (1)," + 
-					"`has_children` TINYINT (1)," + 
-					"`age` INT" + ")" +
-			")" +
-			 "ENGINE = INNODB;";
+			String createPersonTable = "CREATE TABLE IF NOT EXISTS `" + database + "` . `people`" + "(" + "`person_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ," + "`person_name` VARCHAR (50)," + "`death_date` VARCHAR (30)," + "`birth_date` VARCHAR (30),"
+					+ "`is_married` TINYINT (1)," + "`has_children` TINYINT (1)," + "`age` INT" + ")" + ")" + "ENGINE = INNODB;";
 
 			int result = createPersonTableStatement.executeUpdate(createPersonTable);
 			createPersonTableStatement.close();
@@ -264,9 +270,11 @@ public class DataController
 
 	/**
 	 * Insert a Person object into the database, parsing fields as needed.
-	 * Converts the boolean values to 1/0 for SQL support. 
-	 * If there are errors it will call the displaySQLErrors method.
-	 * @param currentPerson The current Person object being added to the database.
+	 * Converts the boolean values to 1/0 for SQL support. If there are errors
+	 * it will call the displaySQLErrors method.
+	 * 
+	 * @param currentPerson
+	 *            The current Person object being added to the database.
 	 */
 	public void insertPersonIntoTable(Person currentPerson)
 	{
@@ -294,24 +302,11 @@ public class DataController
 				databaseIsMarried = 0;
 			}
 
-			String insertPersonString = "INSERT INTO `devvin`.`people`" + "(`person_name`,`death_date`,`birth_date`,`is_married`,`has_children`,`age`) " + "VALUES " + 
-			"('" +
-				currentPerson.getName() +
-				"' , '" + 
-				currentPerson.getDeathDate() +
-				"' , '" + 
-				currentPerson.getBirthDate() +
-				"' , '" +
-				databaseIsMarried +
-				"' , '" + 
-				databaseHasChildren +
-				"' , '" + 
-				currentPerson.getAge() + 
-					"'" + 
-			");";
+			String insertPersonString = "INSERT INTO `devvin`.`people`" + "(`person_name`,`death_date`,`birth_date`,`is_married`,`has_children`,`age`) " + "VALUES " + "('" + currentPerson.getName() + "' , '" + currentPerson.getDeathDate() + "' , '" + currentPerson.getBirthDate()
+					+ "' , '" + databaseIsMarried + "' , '" + databaseHasChildren + "' , '" + currentPerson.getAge() + "'" + ");";
 			int result = insertPersonStatement.executeUpdate(insertPersonString);
 			insertPersonStatement.close();
-			
+
 			JOptionPane.showMessageDialog(baseController.getMyAppFrame(), "Successfully inserted " + result + " rows into the table.");
 		}
 		catch (SQLException currentSQLError)
@@ -319,7 +314,7 @@ public class DataController
 			displaySQLErrors(currentSQLError);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param oldName
@@ -328,26 +323,24 @@ public class DataController
 	public void updatePersonName(String oldName, String newName)
 
 	{
-		try 
+		try
 		{
 			Statement updateStatement = dataConnection.createStatement();
-			
-			String updateString = "UPDATE `devvin`.`people`" +
-									"SET `person_name` = '" + newName + "'" +
-									"WHERE `person_name` = '" + oldName + "'";
-			
+
+			String updateString = "UPDATE `devvin`.`people`" + "SET `person_name` = '" + newName + "'" + "WHERE `person_name` = '" + oldName + "'";
+
 			int result = updateStatement.executeUpdate(updateString);
-			
+
 			JOptionPane.showMessageDialog(baseController.getMyAppFrame(), "Successfully updated" + result + "row(s).");
-			
+
 			updateStatement.close();
 		}
-		catch(SQLException currentSQLError)
+		catch (SQLException currentSQLError)
 		{
 			displaySQLErrors(currentSQLError);
 		}
 	}
-	
+
 	/**
 	 * Creates a connection to the specified external server for the database.
 	 */
@@ -368,42 +361,74 @@ public class DataController
 		Vector<Person> personVector = new Vector<Person>();
 		ResultSet seeDeadPeopleResults;
 		String selectQuery = "SELECT person_age, person_name, person_has_kids, person_is_married, person_birth_date, person_death_date FROM " + tableName + ";";
-		
+
 		try
 		{
 			PreparedStatement selectStatement = dataConnection.prepareStatement(selectQuery);
 			seeDeadPeopleResults = selectStatement.executeQuery();
-			
-			while(seeDeadPeopleResults.next())
+
+			while (seeDeadPeopleResults.next())
 			{
 				Person tempPerson = new Person();
-				
+
 				int tempAge = seeDeadPeopleResults.getInt(1);
 				String tempName = seeDeadPeopleResults.getString(2);
 				boolean tempKids = seeDeadPeopleResults.getBoolean(3);
 				boolean tempMarried = seeDeadPeopleResults.getBoolean(4);
 				String tempBirth = seeDeadPeopleResults.getString(5);
 				String tempDeath = seeDeadPeopleResults.getString(6);
-				
+
 				tempPerson.setAge(tempAge);
 				tempPerson.setBirthDate(tempBirth);
 				tempPerson.setDeathDate(tempDeath);
 				tempPerson.setHasChildren(tempKids);
 				tempPerson.setMarried(tempMarried);
 				tempPerson.setName(tempName);
-				
+
 				personVector.add(tempPerson);
 			}
-			
+
 			seeDeadPeopleResults.close();
 			selectStatement.close();
 		}
-		
+
 		catch (SQLException currentSQLError)
 		{
 			displaySQLErrors(currentSQLError);
 		}
-		
+
 		return personVector;
+	}
+
+	/**
+	 * Creates a Vector<String> from the header information stored in the ResultSetMetaData. Used to creat the TableModel information for a JTable.
+	 * @param database The database that is being queried.
+	 * @param table The table inside the database.
+	 * @return A Vector<String> that contains all the column names for the database.
+	 */
+	public Vector<String> getTableHeaders(String database, String table)
+	{
+		Vector<String> tableHeaders = new Vector<String>();
+		String query = "SELECT * from '" + database + "'.'";
+
+		try
+		{
+			Statement headerStatement = dataConnection.createStatement();
+			ResultSet results = headerStatement.executeQuery(query);
+			ResultSetMetaData resultsData = results.getMetaData();
+
+			for (int column = 1; column <= resultsData.getColumnCount(); column++)
+			{
+				tableHeaders.add(resultsData.getColumnName(column));
+			}
+
+			results.close();
+		}
+		catch (SQLException currentSQLError)
+		{
+			displaySQLErrors(currentSQLError);
+		}
+
+		return tableHeaders;
 	}
 }

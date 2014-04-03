@@ -1,6 +1,10 @@
 package data.controller;
 
 import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import data.model.Gravemarker;
 import data.model.Person;
@@ -87,5 +91,48 @@ public class AppController
 	public void addDeadPerson(Person currentDeadPerson)
 	{
 		graveyardPersons.add(currentDeadPerson);
+	}
+	
+	/**
+	 * Designed for use with a JTable in the DataPanel.
+	 * @return A TableModel composed of the header and data from the people table.
+	 */
+	public TableModel createTableModel()
+	{
+		Vector<String> headers = myDataController.getTableHeaders("graveyard", "people");
+		Vector<Person> base = myDataController.selectDataFromTable("people");
+		Vector<Vector <String>> tableBase = parsePersonInformation(base);
+		TableModel sampleModel = new DefaultTableModel(tableBase, headers);
+		
+		return sampleModel;
+	}
+	
+	/**
+	 * Creates a two dimensional Vector to store rows of information about Person objects to be Placed into a JTable.
+	 * @param peopleData The Vector<Person> information that will be parsed into String objects to be shown in the JTable.
+	 * @return The 2D Vector to be used in the TableModel.
+	 */
+	private Vector<Vector<String>> parsePersonInformation(Vector<Person> peopleData)
+	{
+		Vector<Vector <String>> parsedData = new Vector<Vector <String>>();
+		int currentRowCount = 1;
+		
+		for(Person current : peopleData)
+		{
+			Vector<String> currentRow = new Vector<String>();
+			
+			currentRow.add(Integer.toString(currentRowCount));
+			currentRow.add(current.getName());
+			currentRow.add(current.getBirthDate());
+			currentRow.add(current.getDeathDate());
+			currentRow.add(Boolean.toString(current.isMarried()));
+			currentRow.add(Boolean.toString(current.isHasChildren()));
+			currentRow.add(Integer.toString(current.getAge()));
+			
+			parsedData.add(currentRow);
+			currentRowCount++;
+		}
+		
+		return parsedData;
 	}
 }

@@ -9,9 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.table.TableModel;
 
 import data.controller.AppController;
 import data.model.Person;
@@ -50,6 +52,7 @@ public class DataPanel extends JPanel
 	 * 
 	 */
 	private SpringLayout baseLayout;
+	
 
 	/**
 	 * 
@@ -71,6 +74,8 @@ public class DataPanel extends JPanel
 	 * 
 	 */
 	private JScrollPane resultsPane;
+	
+	private JTable dataTable;
 
 	/**
 	 * 
@@ -94,7 +99,7 @@ public class DataPanel extends JPanel
 		baseLayout = new SpringLayout();
 		
 		
-		
+		setupTable();
 		setupPanel();
 		setupLayout();
 		setupListeners();
@@ -279,5 +284,15 @@ public class DataPanel extends JPanel
 		baseLayout.putConstraint(SpringLayout.WEST, createDatabaseButton, 0, SpringLayout.EAST, insertPersonIntoTableButton);
 		baseLayout.putConstraint(SpringLayout.WEST, insertPersonIntoTableButton, 0, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.SOUTH, insertPersonIntoTableButton, -10, SpringLayout.SOUTH, this);
+	}
+
+	/**
+	 * Helper method to land and the create a JTable based on the components in the database and them place it in the JScrollPane.
+	 */
+	private void setupTable()
+	{
+		TableModel sampleModel = baseController.createTableModel();
+		dataTable = new JTable(sampleModel);
+		resultsPane = new JScrollPane(dataTable);
 	}
 }
